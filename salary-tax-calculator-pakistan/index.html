@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salary Tax Calculator Pakistan 2026-27 | PK Tax Tools</title>
+<meta name="description" content="Free salary tax calculator for Pakistan 2026-27. Enter your monthly salary to see monthly tax, annual tax, take-home pay and effective tax rate.">
+<link rel="canonical" href="https://YOURDOMAIN.com/salary-tax-calculator-pakistan/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Salary Tax Calculator Pakistan 2026-27">
+<meta property="og:description" content="See your monthly tax, annual tax and take-home pay in seconds, with the slab-by-slab working.">
+<meta property="og:url" content="https://YOURDOMAIN.com/salary-tax-calculator-pakistan/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B7A4B">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/theme.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Salary Tax Calculator Pakistan",
+  "url": "https://YOURDOMAIN.com/salary-tax-calculator-pakistan/",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any (web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PKR" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Who counts as a salaried individual?","acceptedAnswer":{"@type":"Answer","text":"A person whose salary is at least 75% of their total taxable income is treated as salaried and uses the salaried slabs. Otherwise the non-salaried slabs apply."}},
+    {"@type":"Question","name":"What is the 75% rule?","acceptedAnswer":{"@type":"Answer","text":"If salary is 75% or more of total taxable income, the salaried slabs apply. If you also earn a lot from business, rent or other sources, the non-salaried slabs may apply instead. This calculator does not check this rule."}},
+    {"@type":"Question","name":"How is tax deducted from my salary every month?","acceptedAnswer":{"@type":"Answer","text":"Your employer estimates your annual tax from your expected taxable salary and deducts roughly one twelfth of it from each monthly salary. This calculator shows the same one-twelfth figure."}},
+    {"@type":"Question","name":"What about allowances and deductions?","acceptedAnswer":{"@type":"Answer","text":"Open Tax-free allowances in the calculator and enter the part of your monthly salary that is not taxed. The calculator then taxes only the rest. Credits and other deductions are not included."}},
+    {"@type":"Question","name":"How do I find the salary that gives me a target take-home?","acceptedAnswer":{"@type":"Answer","text":"Switch the calculator to Take-home to salary, enter the amount you want to receive after tax, and it works backwards to the gross salary you would need."}},
+    {"@type":"Question","name":"When do the slabs change?","acceptedAnswer":{"@type":"Answer","text":"Slabs are normally set by the Finance Act passed around June each year and apply from 1 July. This page shows the rates for tax year 2026-27."}}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to calculator</a>
+<canvas id="bg" aria-hidden="true"></canvas>
+<header class="site"><div class="wrap">
+  <a class="brand" href="/"><svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="var(--accent)"/><path d="M6 21h5v-4h5v-4h6" stroke="var(--on-accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="8.5" r="2.3" fill="var(--gold)"/></svg>PK Tax Tools</a>
+  <nav class="main" aria-label="Main"><a href="/salary-tax-calculator-pakistan/" aria-current="page">Salary tax calculator</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav>
+  <button class="theme" id="theme" type="button" aria-label="Switch light or dark theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+
+<main class="wrap" id="main">
+  <h1><span class="s1">Salary tax</span><span class="s2">calculator Pakistan</span><span class="s3">2026-27</span></h1>
+  <p class="meta">Last updated 13 October 2026. Tax year 1 July 2026 to 30 June 2027, for salaried individuals.</p>
+
+  <section class="calc" aria-label="Salary tax calculator">
+    <form class="in" id="calc" onsubmit="return false">
+      <div class="row">
+        <div class="seg" role="group" aria-label="What do you know?">
+          <button type="button" data-mode="g" aria-pressed="true">Salary to take-home</button>
+          <button type="button" data-mode="n" aria-pressed="false">Take-home to salary</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="seg" role="group" aria-label="Period">
+          <button type="button" data-period="m" aria-pressed="true">Monthly</button>
+          <button type="button" data-period="y" aria-pressed="false">Yearly</button>
+        </div>
+      </div>
+      <div class="row">
+        <label for="salary" id="in-label">Gross salary per month</label>
+        <div class="field"><span>Rs.</span><input id="salary" type="number" inputmode="numeric" min="0" step="1000" value="100000" autocomplete="off"></div>
+        <p class="error" id="err" role="alert"></p>
+        <p class="hint" id="in-hint">The salary before tax, as written in your offer letter or payslip.</p>
+        <div class="chips" id="chips" role="group" aria-label="Quick amounts">
+          <button type="button" data-m="50000">50k</button>
+          <button type="button" data-m="100000">100k</button>
+          <button type="button" data-m="150000">150k</button>
+          <button type="button" data-m="200000">200k</button>
+          <button type="button" data-m="300000">300k</button>
+          <button type="button" data-m="500000">500k</button>
+        </div>
+      </div>
+      <details class="adv">
+        <summary>Tax-free allowances</summary>
+        <label for="exempt">Tax-free part of your monthly salary</label>
+        <div class="field"><span>Rs.</span><input id="exempt" type="number" inputmode="numeric" min="0" step="1000" placeholder="0" autocomplete="off"></div>
+        <p class="hint">Only the rest is taxed. Leave empty if you are not sure which allowances are exempt.</p>
+      </details>
+      <div class="actions">
+        <button type="button" class="btn" id="copy">Copy result</button>
+        <button type="button" class="btn ghost" id="share">Share link</button>
+        <button type="button" class="btn ghost" id="reset">Reset</button>
+      </div>
+    </form>
+
+    <div class="out" aria-live="polite">
+      <div class="hero-num"><small id="hero-label">Take-home per month</small><strong id="hero">Rs. 99,500</strong></div>
+      <div class="split" aria-hidden="true"><i class="keep" id="bar-keep" style="width:99.5%"></i><i class="tax" id="bar-tax" style="width:0.5%"></i></div>
+      <div class="legend"><span id="lg-keep">Rs. 99,500 kept</span><span id="lg-tax">Rs. 500 tax</span></div>
+      <div class="stats">
+        <div><small>Monthly tax</small><strong id="r-mt">Rs. 500</strong></div>
+        <div><small>Annual tax</small><strong id="r-at">Rs. 6,000</strong></div>
+        <div><small>Effective tax rate</small><strong id="r-eff">0.50%</strong></div>
+        <div><small>Rate on your next rupee</small><strong id="r-top">1%</strong></div>
+      </div>
+      <div class="ladder" aria-label="Your position on the tax slab ladder"><svg id="ladder" viewBox="0 0 320 170" role="img" aria-label="Tax slab steps with your position marked"></svg></div>
+      <p class="note">Each step is one slab. The marker shows where your taxable salary sits.</p>
+    </div>
+  </section>
+
+  <h3>Slab-by-slab breakdown</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Slab (annual)</th><th class="n">Rate</th><th class="n">Income in slab</th><th class="n">Tax</th></tr></thead>
+    <tbody id="breakdown">
+      <tr><td>Up to Rs. 600,000</td><td class="n">0%</td><td class="n">Rs. 600,000</td><td class="n">Rs. 0</td></tr>
+      <tr><td>Rs. 600,001 to Rs. 1,200,000</td><td class="n">1%</td><td class="n">Rs. 600,000</td><td class="n">Rs. 6,000</td></tr>
+    </tbody>
+  </table></div>
+  <p class="hint">Estimate only. Without allowances entered, the calculator treats the whole salary as taxable.</p>
+
+  <div class="adslot" aria-hidden="true"></div>
+
+  <h2>How salary tax is calculated in Pakistan</h2>
+  <p>Pakistan taxes salary on a progressive slab system. Your monthly salary is multiplied by 12 to get annual taxable salary. Each slab has a fixed amount of tax plus a percentage on the part of your salary that falls above the slab's starting point. Your monthly tax is then one twelfth of the annual figure. The highlighted row below is the slab your salary falls in.</p>
+  <div class="scroll"><table id="slabs">
+    <thead><tr><th>Annual taxable salary</th><th class="n">Fixed tax</th><th class="n">Rate on the excess</th></tr></thead>
+    <tbody>
+      <tr><td>Up to Rs. 600,000</td><td class="n">Rs. 0</td><td class="n">0%</td></tr>
+      <tr><td>Rs. 600,001 to Rs. 1,200,000</td><td class="n">Rs. 0</td><td class="n">1%</td></tr>
+      <tr><td>Rs. 1,200,001 to Rs. 2,200,000</td><td class="n">Rs. 6,000</td><td class="n">11%</td></tr>
+      <tr><td>Rs. 2,200,001 to Rs. 3,200,000</td><td class="n">Rs. 116,000</td><td class="n">20%</td></tr>
+      <tr><td>Rs. 3,200,001 to Rs. 4,100,000</td><td class="n">Rs. 316,000</td><td class="n">25%</td></tr>
+      <tr><td>Rs. 4,100,001 to Rs. 5,600,000</td><td class="n">Rs. 541,000</td><td class="n">29%</td></tr>
+      <tr><td>Rs. 5,600,001 to Rs. 7,000,000</td><td class="n">Rs. 976,000</td><td class="n">32%</td></tr>
+      <tr><td>Above Rs. 7,000,000</td><td class="n">Rs. 1,424,000</td><td class="n">35%</td></tr>
+    </tbody>
+  </table></div>
+  <p>Rates are those reported for the Finance Act 2026 and cross-checked against several published summaries. Always confirm against the official text on <a href="https://www.fbr.gov.pk" rel="noopener">fbr.gov.pk</a> before relying on them.</p>
+
+  <h3>Worked example</h3>
+  <p>Take a monthly salary of Rs. 200,000. Annual salary is Rs. 2,400,000, which falls in the Rs. 2,200,001 to Rs. 3,200,000 slab. The tax is Rs. 116,000 plus 20% of the part above Rs. 2,200,000: 20% of Rs. 200,000 is Rs. 40,000, so annual tax is Rs. 156,000. Divided by 12, monthly tax is Rs. 13,000 and take-home is Rs. 187,000.</p>
+
+  <h2>Monthly tax at common salaries</h2>
+  <div class="scroll"><table>
+    <thead><tr><th class="n">Monthly salary</th><th class="n">Annual salary</th><th class="n">Annual tax</th><th class="n">Monthly tax</th><th class="n">Take-home</th><th>Working</th></tr></thead>
+    <tbody>
+      <tr><td class="n">Rs. 50,000</td><td class="n">Rs. 600,000</td><td class="n">Rs. 0</td><td class="n">Rs. 0</td><td class="n">Rs. 50,000</td><td>Falls in the 0% slab</td></tr>
+      <tr><td class="n">Rs. 100,000</td><td class="n">Rs. 1,200,000</td><td class="n">Rs. 6,000</td><td class="n">Rs. 500</td><td class="n">Rs. 99,500</td><td>1% of Rs. 600,000</td></tr>
+      <tr><td class="n">Rs. 150,000</td><td class="n">Rs. 1,800,000</td><td class="n">Rs. 72,000</td><td class="n">Rs. 6,000</td><td class="n">Rs. 144,000</td><td>6,000 + 11% of 600,000</td></tr>
+      <tr><td class="n">Rs. 200,000</td><td class="n">Rs. 2,400,000</td><td class="n">Rs. 156,000</td><td class="n">Rs. 13,000</td><td class="n">Rs. 187,000</td><td>116,000 + 20% of 200,000</td></tr>
+      <tr><td class="n">Rs. 500,000</td><td class="n">Rs. 6,000,000</td><td class="n">Rs. 1,104,000</td><td class="n">Rs. 92,000</td><td class="n">Rs. 408,000</td><td>976,000 + 32% of 400,000</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Frequently asked questions</h2>
+  <details class="faq"><summary>Who counts as a salaried individual?</summary><p>A person whose salary is at least 75% of their total taxable income is treated as salaried and uses the salaried slabs. Otherwise the non-salaried slabs apply.</p></details>
+  <details class="faq"><summary>What is the 75% rule?</summary><p>If salary is 75% or more of total taxable income, the salaried slabs apply. If you also earn a lot from business, rent or other sources, the non-salaried slabs may apply instead. This calculator does not check this rule.</p></details>
+  <details class="faq"><summary>How is tax deducted from my salary every month?</summary><p>Your employer estimates your annual tax from your expected taxable salary and deducts roughly one twelfth of it from each monthly salary. This calculator shows the same one-twelfth figure.</p></details>
+  <details class="faq"><summary>What about allowances and deductions?</summary><p>Open Tax-free allowances in the calculator and enter the part of your monthly salary that is not taxed. The calculator then taxes only the rest. Credits and other deductions are not included.</p></details>
+  <details class="faq"><summary>How do I find the salary that gives me a target take-home?</summary><p>Switch the calculator to Take-home to salary, enter the amount you want to receive after tax, and it works backwards to the gross salary you would need.</p></details>
+  <details class="faq"><summary>When do the slabs change?</summary><p>Slabs are normally set by the Finance Act passed around June each year and apply from 1 July. This page shows the rates for tax year 2026-27.</p></details>
+
+  <h2>What this calculator does not cover</h2>
+  <div class="notice">
+    <ul>
+      <li>The 75% test. It assumes you qualify for the salaried slabs.</li>
+      <li>Tax credits, such as those for donations, pension contributions or education fees.</li>
+      <li>Other income, such as business, rent, profit on debt or capital gains.</li>
+    </ul>
+    <p>This tool is for general information and is not tax or legal advice. For your own return, consult a tax professional or the <a href="https://www.fbr.gov.pk" rel="noopener">FBR</a>.</p>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">
+  <a href="/about/">About</a> &middot; <a href="/contact/">Contact</a> &middot; <a href="/privacy-policy/">Privacy Policy</a> &middot; <a href="/terms/">Terms</a>
+  <p>&copy; 2026 PK Tax Tools. Estimates only, not tax advice.</p>
+</div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="/assets/rates.js"></script>
+<script src="/assets/calc.js"></script>
+<script src="/assets/app.js"></script>
+<script src="/assets/bg.js"></script>
+</body>
+</html>
