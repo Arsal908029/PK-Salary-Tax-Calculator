@@ -43,22 +43,29 @@
   }
 
   // opts.exemptMonthly: monthly salary ka woh hissa jis par tax nahi lagta (allowances)
+  // opts.annualBonus: annual taxable salary paid as bonus or irregular pay
   function salaryTax(monthlyGross, slabs, opts) {
     var monthly = clean(monthlyGross);
     var exempt = Math.min(clean(opts && opts.exemptMonthly), monthly);
+    var bonus = clean(opts && opts.annualBonus);
     var taxableMonthly = monthly - exempt;
-    var annual = monthly * 12;
-    var taxable = taxableMonthly * 12;
+    var annual = monthly * 12 + bonus;
+    var taxable = taxableMonthly * 12 + bonus;
     var tax = annualTax(taxable, slabs);
+    var surcharge = opts && opts.surcharge;
+    var annualSurcharge = surcharge && taxable > surcharge.threshold ? tax * surcharge.rate : 0;
+    tax += annualSurcharge;
     var idx = slabIndex(taxable, slabs);
     return {
       monthlyGross: monthly,
       exemptMonthly: exempt,
+      annualBonus: bonus,
       annualSalary: annual,
       annualTaxable: taxable,
       annualTax: tax,
+      annualSurcharge: annualSurcharge,
       monthlyTax: tax / 12,
-      netMonthly: monthly - tax / 12,
+      netMonthly: (annual - tax) / 12,
       netAnnual: annual - tax,
       effectiveRate: annual > 0 ? tax / annual : 0,
       slabIndex: idx,
@@ -71,7 +78,7 @@
   function grossFromNet(targetNetMonthly, slabs, opts) {
     var target = clean(targetNetMonthly);
     if (target === 0) return 0;
-    var lo = target, hi = Math.min(target * 3 + 1000, MAX_MONTHLY);
+    var lo = 0, hi = Math.min(target * 3 + 1000, MAX_MONTHLY);
     for (var i = 0; i < 80; i++) {
       var mid = (lo + hi) / 2;
       if (salaryTax(mid, slabs, opts).netMonthly < target) lo = mid; else hi = mid;

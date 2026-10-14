@@ -1,19 +1,16 @@
-/* Background: tax slabs ki seedhiyan. Tirchi seedhiyan dheere chadhti hain aur un par sone ke sikke chadhte hain.
-   Mouse/touch se halka parallax. Reduced-motion mein sirf ek static frame. Tab chhupne par ruk jata hai. */
+/* Static tax-slab background; redraw only when its size or theme changes. */
 (function () {
   var canvas = document.getElementById("bg");
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext("2d");
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var W = 0, H = 0, dpr = 1, raf = 0, last = 0, t = 0;
-  var px = 0, py = 0, tx = 0, ty = 0; // pointer parallax
+  var W = 0, H = 0, dpr = 1;
   var colors = { line: "11,122,75", gold: "201,138,0", dark: false };
 
-  // Har layer: step ki chaudai/unchai, line ki alpha, speed, parallax ki taqat
+  // Each layer defines the step size, line opacity, and fill opacity.
   var layers = [
-    { w: 120, h: 70, a: 0.10, sp: 0.020, par: 14, off: 0.00, fill: 0.035, lw: 1.2 },
-    { w: 84,  h: 50, a: 0.14, sp: 0.030, par: 26, off: 0.45, fill: 0.045, lw: 1.3 },
-    { w: 56,  h: 34, a: 0.18, sp: 0.045, par: 42, off: 0.20, fill: 0.055, lw: 1.5 }
+    { w: 120, h: 70, a: 0.10, off: 0.00, fill: 0.035, lw: 1.2 },
+    { w: 84,  h: 50, a: 0.14, off: 0.45, fill: 0.045, lw: 1.3 },
+    { w: 56,  h: 34, a: 0.18, off: 0.20, fill: 0.055, lw: 1.5 }
   ];
   var coins = [];
 
@@ -31,7 +28,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     coins = [];
     var n = W < 600 ? 4 : 8;
-    for (var i = 0; i < n; i++) coins.push({ layer: i % layers.length, s: Math.random() * 12, v: 0.12 + Math.random() * 0.14, r: 3 + Math.random() * 2.5 });
+    for (var i = 0; i < n; i++) coins.push({ layer: i % layers.length, s: Math.random() * 12, r: 3 + Math.random() * 2.5 });
     readColors();
     draw();
   }
@@ -44,10 +41,10 @@
   }
 
   function origin(L, k, phase) {
-    // Seedhi ka shuruaati point: screen ke baayen-neeche se pehle shuru, phase se slope par sarakti hai (seamless loop)
-    var shift = (phase % 1);
-    var ox = -L.w * 2 + shift * L.w + px * L.par;
-    var oy = H * (0.95 - k * 0.2) + L.h * 2 - shift * L.h + py * L.par;
+    // Stairs start below and to the left of the viewport.
+    var shift = phase % 1;
+    var ox = -L.w * 2 + shift * L.w;
+    var oy = H * (0.95 - k * 0.2) + L.h * 2 - shift * L.h;
     return [ox, oy];
   }
 
@@ -55,7 +52,7 @@
     ctx.clearRect(0, 0, W, H);
     for (var k = 0; k < layers.length; k++) {
       var L = layers[k];
-      var o = origin(L, k, t * L.sp + L.off);
+      var o = origin(L, k, L.off);
       var steps = Math.ceil(W / L.w) + 5;
       ctx.beginPath();
       ctx.moveTo(o[0], o[1]);
@@ -77,7 +74,7 @@
     // sone ke sikke seedhi par chadhte hue
     for (var c = 0; c < coins.length; c++) {
       var cn = coins[c], CL = layers[cn.layer];
-      var oo = origin(CL, cn.layer, t * CL.sp + CL.off);
+      var oo = origin(CL, cn.layer, CL.off);
       var steps2 = Math.ceil(W / CL.w) + 3;
       var s = cn.s % steps2;
       var p = stairPoint(CL, oo[0], oo[1], s);
@@ -93,28 +90,11 @@
     }
   }
 
-  function frame(now) {
-    var dt = Math.min((now - last) / 1000, 0.05); last = now;
-    t += dt;
-    px += (tx - px) * 0.05; py += (ty - py) * 0.05;
-    for (var i = 0; i < coins.length; i++) coins[i].s += coins[i].v * dt;
-    draw();
-    raf = requestAnimationFrame(frame);
-  }
-  function start() { if (!raf && !reduce) { last = performance.now(); raf = requestAnimationFrame(frame); } }
-  function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
-
   window.addEventListener("resize", resize);
-  window.addEventListener("pointermove", function (e) {
-    tx = (e.clientX / W - 0.5) * -1; ty = (e.clientY / H - 0.5) * -1;
-  }, { passive: true });
-  document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
-  // theme badalne par rang dobara padhein
   window.addEventListener("themechange", function () { readColors(); draw(); });
   if (window.matchMedia) {
     var mq = window.matchMedia("(prefers-color-scheme: dark)");
     if (mq.addEventListener) mq.addEventListener("change", function () { readColors(); draw(); });
   }
   resize();
-  start();
 })();

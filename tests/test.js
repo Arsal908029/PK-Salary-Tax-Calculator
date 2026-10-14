@@ -22,6 +22,16 @@ t("hadd par continuity", () => {
     assert.ok(Math.abs(atEdge - s.base) < 1e-6, "slab " + s.from + " ka base ghalat");
   });
 });
+t("historical and current tax-year slabs are continuous", () => {
+  Object.keys(R.TAX_YEARS).forEach((year) => {
+    const slabs = R.TAX_YEARS[year].slabs;
+    slabs.slice(1).forEach((s, i) => {
+      const prev = slabs[i];
+      const atEdge = prev.base + (s.from - prev.from) * prev.rate;
+      assert.ok(Math.abs(atEdge - s.base) < 1e-6, year + " slab " + s.from + " ka base ghalat");
+    });
+  });
+});
 
 // Ghalat input
 t("khali/0/negative/text -> 0", () => {
@@ -56,6 +66,39 @@ t("exempt allowance: 150k gross, 50k exempt -> tax 6,000", () => {
 t("exempt gross se zyada ho to tax 0", () => {
   assert.strictEqual(C.salaryTax(40000, R.SALARIED_SLABS, { exemptMonthly: 90000 }).annualTax, 0);
 });
+t("annual bonus is included in annual taxable salary", () => {
+  const r = C.salaryTax(100000, R.SALARIED_SLABS, { annualBonus: 300000 });
+  assert.strictEqual(r.annualSalary, 1500000);
+  assert.strictEqual(r.annualTaxable, 1500000);
+  assert.strictEqual(Math.round(r.annualTax), 39000);
+  assert.strictEqual(Math.round(r.netMonthly), 121750);
+});
+t("2025-26 and 2026-27 tax-year comparison", () => {
+  const salary = 200000;
+  const priorTax = C.salaryTax(salary, R.TAX_YEARS["2025-26"].slabs).annualTax;
+  const currentTax = C.salaryTax(salary, R.TAX_YEARS["2026-27"].slabs).annualTax;
+  assert.strictEqual(Math.round(priorTax), 162000);
+  assert.strictEqual(Math.round(currentTax), 156000);
+  assert.strictEqual(Math.round(priorTax - currentTax), 6000);
+});
+t("2025-26 high-income comparison includes reported salary surcharge", () => {
+  const prior = C.salaryTax(1000000, R.TAX_YEARS["2025-26"].slabs, {
+    surcharge: R.TAX_YEARS["2025-26"].surcharge
+  });
+  const current = C.salaryTax(1000000, R.TAX_YEARS["2026-27"].slabs);
+  assert.strictEqual(prior.annualSurcharge, 304290);
+  assert.strictEqual(prior.annualTax, 3685290);
+  assert.strictEqual(current.annualSurcharge, 0);
+});
+t("salary package estimate includes allowance and bonus", () => {
+  const r = C.salaryTax(200000, R.SALARIED_SLABS, {
+    annualBonus: 300000,
+    exemptMonthly: 20000
+  });
+  assert.strictEqual(r.annualSalary, 2700000);
+  assert.strictEqual(r.annualTaxable, 2460000);
+  assert.strictEqual(Math.round(r.annualTax), 168000);
+});
 t("slabIndex aur marginalRate", () => {
   assert.strictEqual(C.salaryTax(50000, R.SALARIED_SLABS).slabIndex, 0);
   assert.strictEqual(C.salaryTax(100000, R.SALARIED_SLABS).slabIndex, 1);
@@ -72,6 +115,18 @@ t("roundtrip exempt ke saath", () => {
   const o = { exemptMonthly: 30000 };
   const net = C.salaryTax(250000, R.SALARIED_SLABS, o).netMonthly;
   assert.ok(Math.abs(C.grossFromNet(net, R.SALARIED_SLABS, o) - 250000) < 0.01);
+});
+t("take-home roundtrip with annual bonus", () => {
+  const o = { annualBonus: 300000 };
+  const net = C.salaryTax(100000, R.SALARIED_SLABS, o).netMonthly;
+  assert.ok(Math.abs(C.grossFromNet(net, R.SALARIED_SLABS, o) - 100000) < 0.01);
+});
+t("comparing 150k and 200k monthly offers", () => {
+  const a = C.salaryTax(150000, R.SALARIED_SLABS);
+  const b = C.salaryTax(200000, R.SALARIED_SLABS);
+  assert.strictEqual(Math.round(a.netMonthly), 144000);
+  assert.strictEqual(Math.round(b.netMonthly), 187000);
+  assert.strictEqual(Math.round(b.annualTax - a.annualTax), 84000);
 });
 t("grossFromNet ghalat input", () => {
   [0, -1, "x", NaN].forEach((v) => assert.strictEqual(C.grossFromNet(v, R.SALARIED_SLABS), 0));

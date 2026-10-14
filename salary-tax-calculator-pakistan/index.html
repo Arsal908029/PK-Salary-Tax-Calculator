@@ -13,9 +13,6 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0B7A4B">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 <script src="/assets/theme.js"></script>
 <script type="application/ld+json">
@@ -50,6 +47,7 @@
 <header class="site"><div class="wrap">
   <a class="brand" href="/"><svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="var(--accent)"/><path d="M6 21h5v-4h5v-4h6" stroke="var(--on-accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="8.5" r="2.3" fill="var(--gold)"/></svg>PK Tax Tools</a>
   <nav class="main" aria-label="Main"><a href="/salary-tax-calculator-pakistan/" aria-current="page">Salary tax calculator</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav>
+  <button class="btn ghost" id="language-toggle" type="button" aria-pressed="false">اردو</button>
   <button class="theme" id="theme" type="button" aria-label="Switch light or dark theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div></header>
 
@@ -58,23 +56,23 @@
   <p class="meta">Last updated 13 October 2026. Tax year 1 July 2026 to 30 June 2027, for salaried individuals.</p>
   <p class="lead">Use this free Pakistan income tax calculator for salaried income to estimate your monthly deductions and annual tax. Choose a monthly or yearly salary to see your take-home pay and how the 2026-27 salary tax slabs apply. This estimate covers salary only, not business or other income.</p>
 
-  <section class="calc" aria-label="Salary tax calculator">
+  <section class="calc localized" aria-label="Salary tax calculator">
     <form class="in" id="calc" onsubmit="return false">
       <div class="row">
-        <div class="seg" role="group" aria-label="What do you know?">
-          <button type="button" data-mode="g" aria-pressed="true">Salary to take-home</button>
-          <button type="button" data-mode="n" aria-pressed="false">Take-home to salary</button>
+        <div class="seg" role="group" aria-label="What do you know?" data-i18n-aria="mode-group">
+          <button type="button" data-mode="g" aria-pressed="true" data-i18n="mode-gross">Salary to take-home</button>
+          <button type="button" data-mode="n" aria-pressed="false" data-i18n="mode-net">Take-home to salary</button>
         </div>
       </div>
       <div class="row">
-        <div class="seg" role="group" aria-label="Period">
-          <button type="button" data-period="m" aria-pressed="true">Monthly</button>
-          <button type="button" data-period="y" aria-pressed="false">Yearly</button>
+        <div class="seg" role="group" aria-label="Period" data-i18n-aria="period-group">
+          <button type="button" data-period="m" aria-pressed="true" data-i18n="monthly">Monthly</button>
+          <button type="button" data-period="y" aria-pressed="false" data-i18n="yearly">Yearly</button>
         </div>
       </div>
       <div class="row">
-        <label for="salary" id="in-label">Gross salary per month</label>
-        <div class="field"><span>Rs.</span><input id="salary" type="number" inputmode="numeric" min="0" step="1000" value="100000" autocomplete="off"></div>
+        <label for="salary" id="in-label" data-i18n="salary-month">Gross salary per month</label>
+        <div class="field"><span>Rs.</span><input id="salary" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="100000" autocomplete="off"></div>
         <p class="error" id="err" role="alert"></p>
         <p class="hint" id="in-hint">The salary before tax, as written in your offer letter or payslip.</p>
         <div class="chips" id="chips" role="group" aria-label="Quick amounts">
@@ -87,19 +85,24 @@
         </div>
       </div>
       <details class="adv">
-        <summary>Tax-free allowances</summary>
-        <label for="exempt">Tax-free part of your monthly salary</label>
-        <div class="field"><span>Rs.</span><input id="exempt" type="number" inputmode="numeric" min="0" step="1000" placeholder="0" autocomplete="off"></div>
-        <p class="hint">Only the rest is taxed. Leave empty if you are not sure which allowances are exempt.</p>
+        <summary data-i18n="allowance-bonus">Allowances and annual bonus</summary>
+        <label for="exempt" data-i18n="exempt-month">Tax-free part of your monthly salary</label>
+        <div class="field"><span>Rs.</span><input id="exempt" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" placeholder="0" autocomplete="off"></div>
+        <p class="hint" data-i18n="exempt-hint">Only the rest is taxed. Leave empty if you are not sure which allowances are exempt.</p>
+        <label for="bonus" style="margin-top:14px" data-i18n="bonus-annual">Annual bonus or irregular salary this tax year</label>
+        <div class="field"><span>Rs.</span><input id="bonus" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" placeholder="0" autocomplete="off"></div>
+        <p class="hint" data-i18n="bonus-hint">The estimate treats this amount as taxable salary and spreads its tax across 12 months. Actual payroll deductions may differ based on when you receive it.</p>
       </details>
       <div class="actions">
-        <button type="button" class="btn" id="copy">Copy result</button>
-        <button type="button" class="btn ghost" id="share">Share link</button>
-        <button type="button" class="btn ghost" id="reset">Reset</button>
+        <button type="button" class="btn" id="copy" data-i18n="copy-result">Copy result</button>
+        <button type="button" class="btn ghost" id="print-report" data-i18n="print-summary-btn">Print tax summary</button>
+        <button type="button" class="btn ghost" id="share" data-i18n="share-link">Share link</button>
+        <button type="button" class="btn ghost" id="reset" data-i18n="reset">Reset</button>
       </div>
+      <p class="hint" data-i18n="privacy-note">Privacy: calculations run in your browser; this calculator does not save or submit your salary. If you choose Share link, the link includes your salary, allowance and bonus values.</p>
     </form>
 
-    <div class="out" aria-live="polite">
+    <div class="out" id="calc-output" aria-live="polite">
       <div class="hero-num"><small id="hero-label">Take-home per month</small><strong id="hero">Rs. 99,500</strong></div>
       <div class="split" aria-hidden="true"><i class="keep" id="bar-keep" style="width:99.5%"></i><i class="tax" id="bar-tax" style="width:0.5%"></i></div>
       <div class="legend"><span id="lg-keep">Rs. 99,500 kept</span><span id="lg-tax">Rs. 500 tax</span></div>
@@ -112,6 +115,122 @@
       <div class="ladder" aria-label="Your position on the tax slab ladder"><svg id="ladder" viewBox="0 0 320 170" role="img" aria-label="Tax slab steps with your position marked"></svg></div>
       <p class="note">Each step is one slab. The marker shows where your taxable salary sits.</p>
     </div>
+  </section>
+
+  <section id="print-summary" aria-label="Printable salary tax summary">
+    <h1>Pakistan Salary Tax Estimate</h1>
+    <p id="print-assumptions"></p>
+    <div class="scroll">
+      <table>
+        <tbody id="print-results"></tbody>
+      </table>
+    </div>
+    <h2>Tax by slab</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Annual taxable salary in slab</th><th class="n">Rate</th><th class="n">Income in slab</th><th class="n">Tax</th></tr></thead>
+        <tbody id="print-breakdown"></tbody>
+      </table>
+    </div>
+    <p>Estimate only, based on the salaried tax slabs for tax year 2026-27. This summary is not tax or legal advice. Confirm applicable rates with the Federal Board of Revenue or a qualified tax professional.</p>
+  </section>
+
+  <section class="compare panel localized" aria-labelledby="compare-title">
+    <h2 id="compare-title" data-i18n="package-title">Compare two salary packages</h2>
+    <p data-i18n="package-intro">Compare two offers including monthly salary, annual bonus, and any monthly allowance you identify as tax-exempt. Each entered exempt allowance is treated as exempt in this estimate.</p>
+    <div class="compare-inputs">
+      <div>
+        <label for="offer-a" data-i18n="offer-a-salary">Offer A: gross salary per month</label>
+        <div class="field"><span>Rs.</span><input id="offer-a" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="150000"></div>
+        <label for="offer-bonus-a" data-i18n="offer-a-bonus">Offer A: annual bonus</label>
+        <div class="field"><span>Rs.</span><input id="offer-bonus-a" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="0"></div>
+        <label for="offer-exempt-a" data-i18n="offer-a-exempt">Offer A: monthly tax-exempt allowance</label>
+        <div class="field"><span>Rs.</span><input id="offer-exempt-a" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="0"></div>
+      </div>
+      <div>
+        <label for="offer-b" data-i18n="offer-b-salary">Offer B: gross salary per month</label>
+        <div class="field"><span>Rs.</span><input id="offer-b" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="200000"></div>
+        <label for="offer-bonus-b" data-i18n="offer-b-bonus">Offer B: annual bonus</label>
+        <div class="field"><span>Rs.</span><input id="offer-bonus-b" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="0"></div>
+        <label for="offer-exempt-b" data-i18n="offer-b-exempt">Offer B: monthly tax-exempt allowance</label>
+        <div class="field"><span>Rs.</span><input id="offer-exempt-b" type="number" inputmode="numeric" min="0" max="1000000000" step="1000" value="0"></div>
+      </div>
+    </div>
+    <p id="compare-error" class="error" role="alert"></p>
+    <p id="compare-summary" class="compare-summary" aria-live="polite"></p>
+    <div class="scroll" id="compare-results">
+      <table>
+        <thead><tr><th data-i18n="estimate">Estimate</th><th class="n" data-i18n="offer-a">Offer A</th><th class="n" data-i18n="offer-b">Offer B</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="annual-gross">Total gross pay per year</td><td class="n" id="compare-gross-a"></td><td class="n" id="compare-gross-b"></td></tr>
+          <tr><td data-i18n="annual-bonus">Annual bonus</td><td class="n" id="compare-bonus-a"></td><td class="n" id="compare-bonus-b"></td></tr>
+          <tr><td data-i18n="annual-exempt">Annual tax-exempt allowance</td><td class="n" id="compare-exempt-a"></td><td class="n" id="compare-exempt-b"></td></tr>
+          <tr><td data-i18n="taxable-annual">Annual taxable salary</td><td class="n" id="compare-taxable-a"></td><td class="n" id="compare-taxable-b"></td></tr>
+          <tr><td data-i18n="monthly-tax">Estimated tax per month</td><td class="n" id="compare-monthly-tax-a"></td><td class="n" id="compare-monthly-tax-b"></td></tr>
+          <tr><td data-i18n="annual-tax">Estimated tax per year</td><td class="n" id="compare-annual-tax-a"></td><td class="n" id="compare-annual-tax-b"></td></tr>
+          <tr><td data-i18n="net-monthly">Average take-home per month</td><td class="n" id="compare-net-monthly-a"></td><td class="n" id="compare-net-monthly-b"></td></tr>
+          <tr><td data-i18n="net-annual">Take-home per year</td><td class="n" id="compare-net-annual-a"></td><td class="n" id="compare-net-annual-b"></td></tr>
+          <tr><td data-i18n="effective-rate">Effective tax rate</td><td class="n" id="compare-effective-a"></td><td class="n" id="compare-effective-b"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint" data-i18n="package-disclaimer">Estimates use the salaried tax slabs only. Actual tax and total compensation may differ due to benefits, credits, other income or personal circumstances.</p>
+  </section>
+
+  <section class="compare panel localized" id="year-comparison" aria-labelledby="year-comparison-title">
+    <h2 id="year-comparison-title" data-i18n="year-compare-title">Compare tax years</h2>
+    <p data-i18n="year-compare-intro">See how the tax on your current calculator salary would differ under the previous year's salaried slabs. Both estimates use the same annual taxable salary.</p>
+    <label for="previous-year" data-i18n="previous-year">Compare against tax year</label>
+    <select id="previous-year">
+      <option value="2025-26">2025-26</option>
+    </select>
+    <p id="year-comparison-summary" class="compare-summary" aria-live="polite"></p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th data-i18n="estimate">Estimate</th><th class="n" id="year-selected-heading">2025-26</th><th class="n" id="year-current-heading">2026-27</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="historical-surcharge">Historical high-income surcharge, if applicable</td><td class="n" id="year-surcharge-a"></td><td class="n" id="year-surcharge-b"></td></tr>
+          <tr><td data-i18n="annual-tax">Estimated tax per year</td><td class="n" id="year-annual-a"></td><td class="n" id="year-annual-b"></td></tr>
+          <tr><td data-i18n="monthly-tax">Estimated tax per month</td><td class="n" id="year-monthly-a"></td><td class="n" id="year-monthly-b"></td></tr>
+          <tr><td data-i18n="net-annual">Estimated take-home per year</td><td class="n" id="year-net-a"></td><td class="n" id="year-net-b"></td></tr>
+          <tr><td data-i18n="effective-rate">Effective tax rate</td><td class="n" id="year-effective-a"></td><td class="n" id="year-effective-b"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="hint" data-i18n="year-compare-note">Historical-rate comparison for salaried income only. Rates are cross-checked against published tax-year summaries, not legal advice. Confirm the applicable Finance Act and FBR guidance.</p>
+    <ul>
+      <li><a href="https://www.ict.edu.pk/blogs/income-tax-slabs-pakistan-2025-26" rel="noopener">2025-26 salaried slab reference (Institute of Corporate and Taxation)</a></li>
+      <li><a href="https://taxcalc.pk/compare-tax-years" rel="noopener">2025-26 vs 2026-27 tax-year cross-check (TaxCalc.pk)</a></li>
+      <li><a href="https://www.fbr.gov.pk" rel="noopener">Federal Board of Revenue</a></li>
+    </ul>
+  </section>
+
+  <section class="panel quiz localized" aria-labelledby="quiz-title">
+    <h2 id="quiz-title" data-i18n="quiz-title">Quick salary-tax quiz</h2>
+    <p data-i18n="quiz-intro">Check your understanding of the estimate. This quiz does not change your calculation.</p>
+    <form id="tax-quiz">
+      <fieldset>
+        <legend data-i18n="quiz-q1">Which amount determines the tax slab in this calculator?</legend>
+        <label><input type="radio" name="quiz-q1" value="a"> <span data-i18n="quiz-q1-a">Annual taxable salary</span></label>
+        <label><input type="radio" name="quiz-q1" value="b"> <span data-i18n="quiz-q1-b">Monthly take-home pay</span></label>
+        <label><input type="radio" name="quiz-q1" value="c"> <span data-i18n="quiz-q1-c">The value of your benefits</span></label>
+      </fieldset>
+      <fieldset>
+        <legend data-i18n="quiz-q2">When your income enters a higher tax slab, what is taxed at that slab’s rate?</legend>
+        <label><input type="radio" name="quiz-q2" value="a"> <span data-i18n="quiz-q2-a">All of your salary</span></label>
+        <label><input type="radio" name="quiz-q2" value="b"> <span data-i18n="quiz-q2-b">Only the portion within that slab</span></label>
+        <label><input type="radio" name="quiz-q2" value="c"> <span data-i18n="quiz-q2-c">Only your monthly take-home</span></label>
+      </fieldset>
+      <fieldset>
+        <legend data-i18n="quiz-q3">How does this estimate show monthly tax?</legend>
+        <label><input type="radio" name="quiz-q3" value="a"> <span data-i18n="quiz-q3-a">Annual tax divided by 12</span></label>
+        <label><input type="radio" name="quiz-q3" value="b"> <span data-i18n="quiz-q3-b">The highest slab rate multiplied by monthly salary</span></label>
+        <label><input type="radio" name="quiz-q3" value="c"> <span data-i18n="quiz-q3-c">A fixed amount for everyone</span></label>
+      </fieldset>
+      <button class="btn" type="submit" data-i18n="quiz-check">Check answers</button>
+      <button class="btn ghost" type="reset" data-i18n="quiz-reset">Try again</button>
+      <p id="quiz-result" class="compare-summary" role="status" aria-live="polite"></p>
+    </form>
   </section>
 
   <h3>Slab-by-slab breakdown</h3>
