@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/sitemap.xml
+# LLM content index: https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/llms.txt

@@ -1,0 +1,21 @@
+# PK Tax Tools
+
+> Free browser-based estimates and plain-language information about salaried income tax in Pakistan.
+
+PK Tax Tools is an independent website. It is not an official Federal Board of Revenue service and does not provide tax, legal, or financial advice. Calculator results are estimates; confirm applicable rules with the current Finance Act, FBR guidance, or a qualified tax professional.
+
+Salary figures entered into the calculator are processed in the visitor's browser. The tool does not send those figures to a server.
+
+## Main pages
+
+- [Home](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/): Overview and guidance.
+- [Salary calculator](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/salary-tax-calculator-pakistan/): Estimates for salaried income in tax year 2026-27, including slab breakdowns, package comparisons, and FAQs.
+- [About and editorial policy](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/about/): Rate references, update approach, corrections, and limitations.
+- [Contact and corrections](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/contact/): Report issues through the public GitHub tracker. Do not share private financial details.
+- [Privacy policy](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/privacy-policy/): Data handling information.
+- [Terms of use](https://pk-salary-tax-calculator.wwwarsalanali14.workers.dev/terms/): Terms and limitations.
+
+## Sources
+
+- [Federal Board of Revenue](https://www.fbr.gov.pk/): Official tax information.
+- Current and historical rate references are listed on the salary calculator page.
