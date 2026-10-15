@@ -1,7 +1,6 @@
-/* Light/dark theme. Head mein load hota hai taake page par flash na aaye. */
+/* Theme controls; saved preference is applied inline before styles render. */
 (function () {
   var KEY = "pktt-theme", root = document.documentElement;
-  try { var s = localStorage.getItem(KEY); if (s === "light" || s === "dark") root.setAttribute("data-theme", s); } catch (e) {}
   function isDark() {
     var a = root.getAttribute("data-theme");
     if (a) return a === "dark";
